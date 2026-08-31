@@ -1,0 +1,35 @@
+# Virtual environments
+venv/
+.venv/
+test_env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables / secrets
+.env
+.env.*
+
+# IDE
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local datasets
+chest_xray/
+dataset/
+data/
+
+# TensorFlow / Keras temporary files
+*.tmp
