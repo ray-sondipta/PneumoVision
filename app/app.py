@@ -12,8 +12,9 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(
     page_title="PneumoVision",
-    page_icon="P",
-    layout="wide"
+    page_icon="🫁",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 
@@ -25,26 +26,29 @@ st.markdown(
     """
     <style>
 
-    /* ========================================================
-       GLOBAL BACKGROUND
-       ======================================================== */
+    /* ======================================================
+       GLOBAL
+       ====================================================== */
 
     .stApp {
         background:
             radial-gradient(
-                circle at 50% -10%,
-                #12365a 0%,
-                #091827 38%,
-                #050d17 75%,
-                #030811 100%
+                circle at 80% 10%,
+                rgba(35, 120, 150, 0.16),
+                transparent 35%
+            ),
+            linear-gradient(
+                135deg,
+                #06131f 0%,
+                #081a29 50%,
+                #06131f 100%
             );
-
-        color: #eaf4ff;
+        color: #f4f8fb;
     }
 
     .block-container {
-        max-width: 1200px;
-        padding-top: 1.5rem;
+        max-width: 1180px;
+        padding-top: 2rem;
         padding-bottom: 4rem;
     }
 
@@ -52,477 +56,406 @@ st.markdown(
         background: transparent;
     }
 
+    /* ======================================================
+       SIDEBAR
+       ====================================================== */
 
-    /* ========================================================
-       GENERAL TYPOGRAPHY
-       ======================================================== */
-
-    html,
-    body {
-        font-family:
-            Inter,
-            -apple-system,
-            BlinkMacSystemFont,
-            "Segoe UI",
-            sans-serif;
+    section[data-testid="stSidebar"] {
+        background:
+            linear-gradient(
+                180deg,
+                #0a1d2b 0%,
+                #071724 100%
+            );
+        border-right: 1px solid #18394b;
     }
 
-    h1,
-    h2,
-    h3,
-    h4 {
-        color: #f4f8fc !important;
-        letter-spacing: -0.02em;
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3 {
+        color: #f5f9fc;
     }
 
-    p {
-        color: #b9cddd;
+    section[data-testid="stSidebar"] p {
+        color: #a8bdca;
     }
 
-    .stCaption,
-    [data-testid="stCaptionContainer"] {
-        color: #9ab0c2 !important;
+    .sidebar-divider {
+        height: 1px;
+        background: #204456;
+        margin: 28px 0;
     }
 
-
-    /* ========================================================
-       HERO
-       ======================================================== */
-
-    .hero {
-        text-align: center;
-        padding: 55px 20px 28px 20px;
+    .sidebar-label {
+        color: #8fa9b8;
+        font-size: 13px;
+        margin-top: 18px;
+        margin-bottom: 4px;
     }
 
-    .badge {
-        display: inline-block;
-
-        color: #7be3f7;
-
-        background: rgba(43, 173, 213, 0.12);
-
-        border: 1px solid rgba(74, 195, 230, 0.32);
-
-        border-radius: 999px;
-
-        padding: 7px 16px;
-
-        font-size: 12px;
-
+    .sidebar-value {
+        color: #f5fbff;
+        font-size: 28px;
         font-weight: 700;
-
-        letter-spacing: 1.3px;
-
-        margin-bottom: 22px;
-
-        box-shadow:
-            0 3px 14px rgba(30, 174, 213, 0.08);
+        margin-bottom: 12px;
     }
 
-    .hero-title {
-        color: #f7fbff;
-
-        font-size: 64px;
-
-        font-weight: 800;
-
-        line-height: 1.05;
-
-        letter-spacing: -2px;
-
-        margin-bottom: 18px;
+    .sidebar-section-title {
+        color: #f5f9fc;
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 8px;
+        margin-bottom: 12px;
     }
 
-    .hero-title span {
-        color: #4fd1e8;
+    .sidebar-detail {
+        color: #b6c8d3;
+        font-size: 13px;
+        line-height: 1.8;
     }
 
-    .subtitle {
-        color: #c7d9e8;
+    /* ======================================================
+       HERO
+       ====================================================== */
 
-        font-size: 19px;
-
-        max-width: 760px;
-
-        margin: auto;
-
-        line-height: 1.65;
-    }
-
-    .subtitle strong {
-        color: #f1fbff;
-    }
-
-
-    /* ========================================================
-       MAIN ANALYZE BUTTON
-       ======================================================== */
-
-    .stButton > button {
+    .hero-wrapper {
         background:
             linear-gradient(
                 135deg,
-                #20b9df 0%,
-                #168db8 55%,
-                #116f98 100%
-            ) !important;
-
-        color: #ffffff !important;
-
-        border: 1px solid #5bdcf5 !important;
-
-        border-radius: 10px !important;
-
-        font-size: 15px !important;
-
-        font-weight: 700 !important;
-
-        height: 50px !important;
-
-        letter-spacing: 0.15px;
-
-        box-shadow:
-            0 6px 20px rgba(24, 181, 221, 0.28),
-            0 0 0 1px rgba(91, 220, 245, 0.08) !important;
-
-        transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease,
-            filter 0.2s ease !important;
-    }
-
-    .stButton > button:hover {
-        transform: translateY(-2px);
-
-        filter: brightness(1.08);
-
-        box-shadow:
-            0 10px 28px rgba(24, 181, 221, 0.38),
-            0 0 18px rgba(55, 211, 241, 0.16) !important;
-    }
-
-    .stButton > button:active {
-        transform: translateY(0px);
-    }
-
-
-    /* ========================================================
-       FEATURE CARDS
-       ======================================================== */
-
-    .card {
-        background:
-            linear-gradient(
-                145deg,
-                rgba(17, 39, 61, 0.96),
-                rgba(9, 24, 40, 0.96)
+                rgba(18, 53, 70, 0.95),
+                rgba(8, 28, 42, 0.97)
             );
-
-        border: 1px solid #1e3c57;
-
-        border-radius: 16px;
-
-        padding: 26px;
-
-        min-height: 175px;
-
+        border: 1px solid #24586c;
+        border-radius: 24px;
+        padding: 52px 58px;
+        margin-bottom: 28px;
         box-shadow:
-            0 12px 30px rgba(0, 0, 0, 0.16);
-
-        transition:
-            border-color 0.2s ease,
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
+            0 20px 60px rgba(0, 0, 0, 0.25);
     }
 
-    .card:hover {
-        border-color: #2d6685;
-
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 15px 34px rgba(0, 0, 0, 0.22);
+    .hero-icon {
+        font-size: 46px;
+        margin-bottom: 20px;
     }
 
-    .card h3 {
-        color: #edf7ff !important;
+    .eyebrow {
+        color: #52d6ee;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+    }
 
-        margin-bottom: 12px;
+    .hero-title {
+        color: #f7fbfd;
+        font-size: 58px;
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -1.5px;
+        margin-bottom: 20px;
+    }
 
-        font-size: 20px;
+    .hero-title span {
+        color: #49cfe8;
+    }
 
+    .hero-description {
+        color: #b7cbd6;
+        font-size: 18px;
+        line-height: 1.75;
+        max-width: 820px;
+        margin-bottom: 26px;
+    }
+
+    .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+    }
+
+    .tech-tag {
+        display: inline-block;
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid #2d7187;
+        background: rgba(31, 105, 126, 0.18);
+        color: #70def2;
+        font-size: 12px;
         font-weight: 700;
     }
 
-    .card p {
-        color: #b4c7d8;
+    /* ======================================================
+       DISCLAIMER
+       ====================================================== */
 
-        line-height: 1.65;
-
-        font-size: 14px;
-
-        margin-bottom: 0;
+    .disclaimer {
+        background: rgba(38, 36, 24, 0.72);
+        border: 1px solid #75612b;
+        border-left: 4px solid #e8bd4b;
+        border-radius: 14px;
+        padding: 18px 22px;
+        margin: 24px 0 34px 0;
+        color: #d7d0b9;
+        font-size: 13px;
+        line-height: 1.7;
     }
 
+    .disclaimer-title {
+        color: #f1d47b;
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
 
-    /* ========================================================
-       METRIC CARDS
-       ======================================================== */
+    /* ======================================================
+       SECTION HEADINGS
+       ====================================================== */
 
-    .metric {
-        text-align: center;
+    .section-title {
+        color: #f5f9fc;
+        font-size: 30px;
+        font-weight: 750;
+        letter-spacing: -0.5px;
+        margin-top: 42px;
+        margin-bottom: 5px;
+    }
 
+    .section-subtitle {
+        color: #829eae;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* ======================================================
+       FEATURE CARDS
+       ====================================================== */
+
+    .feature-card {
         background:
             linear-gradient(
                 145deg,
-                rgba(16, 39, 61, 0.98),
-                rgba(8, 23, 38, 0.98)
+                rgba(17, 43, 58, 0.96),
+                rgba(10, 28, 40, 0.96)
             );
+        border: 1px solid #20495d;
+        border-radius: 18px;
+        padding: 25px;
+        min-height: 180px;
+        transition: 0.2s ease;
+    }
 
-        border: 1px solid #21425e;
+    .feature-card:hover {
+        border-color: #3a8298;
+    }
 
-        border-radius: 15px;
+    .feature-title {
+        color: #f4f9fc;
+        font-size: 19px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
 
-        padding: 23px 15px;
+    .feature-text {
+        color: #9db5c3;
+        font-size: 14px;
+        line-height: 1.7;
+    }
 
-        box-shadow:
-            0 10px 28px rgba(0, 0, 0, 0.14);
+    /* ======================================================
+       METRIC CARDS
+       ====================================================== */
+
+    .metric-card {
+        background:
+            linear-gradient(
+                145deg,
+                #102d3e,
+                #0b2231
+            );
+        border: 1px solid #24566d;
+        border-radius: 17px;
+        padding: 24px 15px;
+        text-align: center;
+        min-height: 115px;
     }
 
     .metric-value {
-        color: #51d4f2;
-
-        font-size: 29px;
-
+        color: #5edcf1;
+        font-size: 28px;
         font-weight: 800;
-
-        letter-spacing: -0.5px;
+        line-height: 1.2;
+        margin-bottom: 8px;
     }
 
     .metric-label {
-        color: #a1b6c7;
+        color: #a7bdc9;
+        font-size: 12px;
+        font-weight: 500;
+    }
 
+    /* ======================================================
+       WORKFLOW CARDS
+       ====================================================== */
+
+    .workflow-card {
+        background: rgba(12, 35, 49, 0.82);
+        border: 1px solid #1e4658;
+        border-radius: 16px;
+        padding: 21px;
+        min-height: 135px;
+    }
+
+    .workflow-number {
+        color: #52d6ee;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .workflow-title {
+        color: #f5f9fc;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .workflow-text {
+        color: #98b1bf;
         font-size: 13px;
-
-        margin-top: 5px;
+        line-height: 1.55;
     }
 
+    /* ======================================================
+       ANALYSIS AREA
+       ====================================================== */
 
-    /* ========================================================
-       HOW IT WORKS
-       ======================================================== */
-
-    [data-testid="stAlert"] {
-        background: #0d2237;
-
-        border: 1px solid #204663;
-
-        color: #c5d8e8;
-
-        border-radius: 13px;
-
-        box-shadow:
-            0 7px 20px rgba(0, 0, 0, 0.10);
-    }
-
-    [data-testid="stAlert"] p {
-        color: #b9cddd !important;
-    }
-
-
-    /* ========================================================
-       FILE UPLOADER
-       ======================================================== */
-
-    [data-testid="stFileUploader"] {
-        background: rgba(10, 28, 45, 0.70);
-
-        border: 1px solid #23445e;
-
-        border-radius: 14px;
-
-        padding: 8px;
-
-        box-shadow:
-            0 8px 22px rgba(0, 0, 0, 0.10);
-    }
-
-    [data-testid="stFileUploader"] section {
-        background: transparent !important;
-    }
-
-    [data-testid="stFileUploaderDropzone"] {
-        background: #0b1d2e !important;
-
-        border: 1px dashed #3a6983 !important;
-
-        border-radius: 11px !important;
-    }
-
-    [data-testid="stFileUploaderDropzoneInstructions"] {
-        color: #b5c9d9 !important;
-    }
-
-    [data-testid="stFileUploaderDropzoneInstructions"] span {
-        color: #a8bfd0 !important;
-    }
-
-
-    /* ========================================================
-       IMAGE
-       ======================================================== */
-
-    [data-testid="stImage"] img {
-        border-radius: 14px;
-
-        border: 1px solid #23445e;
-
-        box-shadow:
-            0 10px 25px rgba(0, 0, 0, 0.16);
-    }
-
-
-    /* ========================================================
-       PROGRESS BAR
-       ======================================================== */
-
-    [data-testid="stProgress"] > div {
-        background-color: #132b40 !important;
-
-        border-radius: 20px;
-    }
-
-    [data-testid="stProgress"] > div > div {
-        background:
-            linear-gradient(
-                90deg,
-                #1a9bc0,
-                #53d8f2
-            ) !important;
-
-        border-radius: 20px;
-    }
-
-
-    /* ========================================================
-       STREAMLIT METRIC COMPONENT
-       ======================================================== */
-
-    [data-testid="stMetric"] {
-        background: #0c2032;
-
-        border: 1px solid #21425e;
-
-        border-radius: 13px;
-
-        padding: 15px;
-
-        box-shadow:
-            0 6px 18px rgba(0, 0, 0, 0.10);
-    }
-
-    [data-testid="stMetricLabel"] {
-        color: #9eb3c4 !important;
-    }
-
-    [data-testid="stMetricValue"] {
-        color: #eaf7ff !important;
-    }
-
-
-    /* ========================================================
-       RESULT BOXES
-       ======================================================== */
-
-    [data-testid="stAlert"][kind="error"] {
-        background: rgba(111, 39, 48, 0.25);
-
-        border: 1px solid rgba(214, 91, 103, 0.45);
-    }
-
-    [data-testid="stAlert"][kind="success"] {
-        background: rgba(27, 100, 88, 0.25);
-
-        border: 1px solid rgba(67, 180, 153, 0.45);
-    }
-
-
-    /* ========================================================
-       HEADERS
-       ======================================================== */
-
-    .stHeader {
-        color: #f4f8fc !important;
-    }
-
-
-    /* ========================================================
-       DISCLAIMER
-       ======================================================== */
-
-    .disclaimer {
-        color: #a9bac7;
-
+    .analysis-box {
         background:
             linear-gradient(
                 145deg,
-                rgba(22, 32, 43, 0.92),
-                rgba(13, 23, 34, 0.92)
+                rgba(14, 42, 57, 0.96),
+                rgba(8, 27, 39, 0.96)
             );
-
-        border: 1px solid #344554;
-
-        border-radius: 13px;
-
-        padding: 19px 21px;
-
-        margin-top: 45px;
-
-        font-size: 12px;
-
-        line-height: 1.65;
+        border: 1px solid #24566c;
+        border-radius: 20px;
+        padding: 28px;
+        margin-top: 25px;
     }
 
-    .disclaimer strong {
-        color: #dce8ef;
+    .result-box {
+        border-radius: 16px;
+        padding: 22px;
+        margin-top: 12px;
     }
 
+    .result-positive {
+        background: rgba(127, 42, 42, 0.16);
+        border: 1px solid #8b4c4c;
+    }
 
-    /* ========================================================
+    .result-negative {
+        background: rgba(42, 110, 87, 0.16);
+        border: 1px solid #3e7d69;
+    }
+
+    .result-title {
+        font-size: 14px;
+        color: #9eb5c1;
+        margin-bottom: 5px;
+    }
+
+    .result-value {
+        font-size: 27px;
+        font-weight: 800;
+        color: #f5f9fc;
+    }
+
+    /* ======================================================
        FOOTER
-       ======================================================== */
+       ====================================================== */
 
     .footer {
+        border-top: 1px solid #1d3d4e;
+        margin-top: 60px;
+        padding-top: 25px;
         text-align: center;
+    }
 
-        color: #7690a4;
+    .footer-name {
+        color: #eaf5f8;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
 
+    .footer-course {
+        color: #58cfe5;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .footer-text {
+        color: #7893a1;
         font-size: 12px;
-
-        padding-top: 5px;
+        line-height: 1.6;
     }
 
+    /* ======================================================
+       STREAMLIT BUTTON
+       ====================================================== */
 
-    /* ========================================================
-       SCROLLBAR
-       ======================================================== */
-
-    ::-webkit-scrollbar {
-        width: 8px;
+    div.stButton > button {
+        background:
+            linear-gradient(
+                135deg,
+                #39c7df,
+                #179bb8
+            );
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        height: 52px;
+        font-size: 15px;
+        font-weight: 800;
+        box-shadow:
+            0 8px 25px rgba(30, 180, 210, 0.20);
     }
 
-    ::-webkit-scrollbar-track {
-        background: #071421;
+    div.stButton > button:hover {
+        background:
+            linear-gradient(
+                135deg,
+                #4bd5eb,
+                #1ba9c5
+            );
+        color: white;
+        border: none;
     }
 
-    ::-webkit-scrollbar-thumb {
-        background: #28465d;
+    /* ======================================================
+       FILE UPLOADER
+       ====================================================== */
 
-        border-radius: 10px;
+    [data-testid="stFileUploader"] {
+        background: rgba(13, 39, 53, 0.75);
+        border: 1px dashed #347b91;
+        border-radius: 15px;
+        padding: 10px;
     }
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: #38647e;
+    /* ======================================================
+       GENERAL TEXT
+       ====================================================== */
+
+    h1, h2, h3, h4 {
+        color: #f5f9fc !important;
+    }
+
+    .stCaption {
+        color: #829eae !important;
     }
 
     </style>
@@ -558,7 +491,7 @@ model = load_model()
 
 
 # ============================================================
-# FIND EFFICIENTNET
+# FIND EFFICIENTNET BASE MODEL
 # ============================================================
 
 base_model = None
@@ -570,7 +503,6 @@ for layer in model.layers:
         if "efficientnet" in layer.name.lower():
 
             base_model = layer
-
             break
 
 
@@ -597,7 +529,6 @@ for layer in reversed(base_model.layers):
     ):
 
         last_conv_layer = layer
-
         break
 
 
@@ -611,55 +542,170 @@ if last_conv_layer is None:
 
 
 # ============================================================
+# SIDEBAR — MODEL INFORMATION
+# ============================================================
+
+with st.sidebar:
+
+    st.markdown(
+        """
+        <h2 style="margin-bottom:5px;">
+        Model Information
+        </h2>
+
+        <p style="color:#63d4e9;">
+        EfficientNetB0 transfer-learning classifier
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="sidebar-divider"></div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="sidebar-section-title">Model Details</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        """
+        <div class="sidebar-detail">
+        <b>Architecture:</b> EfficientNetB0<br>
+        <b>Approach:</b> Transfer Learning<br>
+        <b>Input:</b> 224 × 224 RGB<br>
+        <b>Classes:</b> Normal / Pneumonia
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="sidebar-divider"></div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="sidebar-section-title">Test Performance</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        """
+        <div class="sidebar-label">Test Accuracy</div>
+        <div class="sidebar-value">87.66%</div>
+
+        <div class="sidebar-label">ROC-AUC</div>
+        <div class="sidebar-value">94.09%</div>
+
+        <div class="sidebar-label">Pneumonia Recall</div>
+        <div class="sidebar-value">92.05%</div>
+
+        <div class="sidebar-label">Pneumonia Precision</div>
+        <div class="sidebar-value">88.64%</div>
+
+        <div class="sidebar-label">Pneumonia F1-Score</div>
+        <div class="sidebar-value">90.31%</div>
+
+        <div class="sidebar-label">Macro F1-Score</div>
+        <div class="sidebar-value">86.66%</div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="sidebar-divider"></div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="sidebar-section-title">Input Requirements</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        """
+        <div class="sidebar-detail">
+        • Chest X-ray image<br>
+        • JPG, JPEG or PNG<br>
+        • Recommended: clear frontal X-ray
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+# ============================================================
 # HERO
 # ============================================================
 
-st.markdown(
-    '<div class="hero">',
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    '<div class="badge">AI-POWERED CHEST X-RAY ANALYSIS</div>',
-    unsafe_allow_html=True
-)
-
-st.markdown(
+st.html(
     """
-    <div class="hero-title">
-        Pneumo<span>Vision</span>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+    <div class="hero-wrapper">
 
-st.markdown(
+        <div class="hero-icon">🫁</div>
+
+        <div class="eyebrow">
+            Deep Learning · Chest X-Ray Analysis
+        </div>
+
+        <div class="hero-title">
+            Pneumo<span>Vision</span>
+        </div>
+
+        <div class="hero-description">
+            An AI-powered chest X-ray analysis system that
+            uses an EfficientNetB0 transfer-learning model
+            to classify images as Normal or Pneumonia,
+            with Grad-CAM providing visual insight into
+            the model's prediction.
+        </div>
+
+        <div class="tech-tags">
+            <span class="tech-tag">TensorFlow</span>
+            <span class="tech-tag">EfficientNetB0</span>
+            <span class="tech-tag">Transfer Learning</span>
+            <span class="tech-tag">Grad-CAM</span>
+            <span class="tech-tag">Streamlit</span>
+        </div>
+
+    </div>
     """
-    <div class="subtitle">
-        Deep learning-based pneumonia detection from chest
-        X-ray images, powered by
-        <strong>EfficientNetB0</strong> and
-        explainable AI.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    '</div>',
-    unsafe_allow_html=True
 )
 
 
 # ============================================================
-# MAIN BUTTON
+# DISCLAIMER
 # ============================================================
 
-left, center, right = st.columns(
-    [1, 1, 1]
+st.html(
+    """
+    <div class="disclaimer">
+
+        <div class="disclaimer-title">
+            Educational prototype only.
+        </div>
+
+        This application is not clinically validated and
+        must not replace examination, diagnosis or advice
+        from a qualified medical professional.
+
+    </div>
+    """
 )
 
-with center:
+
+# ============================================================
+# ANALYZE BUTTON
+# ============================================================
+
+button_left, button_center, button_right = st.columns(
+    [1.2, 1, 1.2]
+)
+
+with button_center:
 
     analyze_clicked = st.button(
         "Analyze a Chest X-Ray",
@@ -668,77 +714,100 @@ with center:
     )
 
 
+if analyze_clicked:
+
+    st.html(
+        """
+        <script>
+        window.parent.document.getElementById(
+            "analysis"
+        )?.scrollIntoView({
+            behavior: "smooth"
+        });
+        </script>
+        """
+    )
+
+
 # ============================================================
 # FEATURES
 # ============================================================
 
-st.markdown(
-    "## Built for Explainable AI"
+st.html(
+    """
+    <div class="section-title">
+        Built for Explainable AI
+    </div>
+
+    <div class="section-subtitle">
+        More than a prediction — understand what the model sees.
+    </div>
+    """
 )
 
-st.caption(
-    "More than a prediction — understand what the model sees."
-)
+
+feature1, feature2, feature3 = st.columns(3)
 
 
-col1, col2, col3 = st.columns(3)
+with feature1:
 
-
-with col1:
-
-    st.markdown(
+    st.html(
         """
-        <div class="card">
+        <div class="feature-card">
 
-        <h3>Deep Learning</h3>
+            <div class="feature-title">
+                Deep Learning
+            </div>
 
-        <p>
-        EfficientNetB0 transfer learning model trained
-        to classify chest X-ray images into Normal and
-        Pneumonia classes.
-        </p>
+            <div class="feature-text">
+                EfficientNetB0 transfer learning model trained
+                to classify chest X-ray images into Normal and
+                Pneumonia classes.
+            </div>
 
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
-with col2:
+with feature2:
 
-    st.markdown(
+    st.html(
         """
-        <div class="card">
+        <div class="feature-card">
 
-        <h3>Model Performance</h3>
+            <div class="feature-title">
+                Model Performance
+            </div>
 
-        <p>
-        Evaluated using accuracy, precision, recall,
-        F1-score and ROC-AUC on unseen test data.
-        </p>
+            <div class="feature-text">
+                Evaluated using accuracy, precision, recall,
+                F1-score and ROC-AUC on unseen test data.
+            </div>
 
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
-with col3:
+with feature3:
 
-    st.markdown(
+    st.html(
         """
-        <div class="card">
+        <div class="feature-card">
 
-        <h3>Explainable AI</h3>
+            <div class="feature-title">
+                Explainable AI
+            </div>
 
-        <p>
-        Grad-CAM highlights regions that contributed
-        to the model's prediction.
-        </p>
+            <div class="feature-text">
+                Grad-CAM highlights image regions that
+                contributed to the model's prediction,
+                making the result more interpretable.
+            </div>
 
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
@@ -746,15 +815,16 @@ with col3:
 # MODEL PERFORMANCE
 # ============================================================
 
-st.markdown("")
-st.markdown("")
+st.html(
+    """
+    <div class="section-title">
+        Model Performance
+    </div>
 
-st.markdown(
-    "## Model Performance"
-)
-
-st.caption(
-    "Fine-tuned PneumoVision model evaluated on the test dataset."
+    <div class="section-subtitle">
+        Fine-tuned PneumoVision model evaluated on unseen test data.
+    </div>
+    """
 )
 
 
@@ -763,81 +833,49 @@ m1, m2, m3, m4 = st.columns(4)
 
 with m1:
 
-    st.markdown(
+    st.html(
         """
-        <div class="metric">
-
-        <div class="metric-value">
-        87.66%
+        <div class="metric-card">
+            <div class="metric-value">87.66%</div>
+            <div class="metric-label">Test Accuracy</div>
         </div>
-
-        <div class="metric-label">
-        Test Accuracy
-        </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
 with m2:
 
-    st.markdown(
+    st.html(
         """
-        <div class="metric">
-
-        <div class="metric-value">
-        94.09%
+        <div class="metric-card">
+            <div class="metric-value">94.09%</div>
+            <div class="metric-label">ROC-AUC</div>
         </div>
-
-        <div class="metric-label">
-        ROC-AUC
-        </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
 with m3:
 
-    st.markdown(
+    st.html(
         """
-        <div class="metric">
-
-        <div class="metric-value">
-        92.05%
+        <div class="metric-card">
+            <div class="metric-value">92.05%</div>
+            <div class="metric-label">Pneumonia Recall</div>
         </div>
-
-        <div class="metric-label">
-        Pneumonia Recall
-        </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
 with m4:
 
-    st.markdown(
+    st.html(
         """
-        <div class="metric">
-
-        <div class="metric-value">
-        90.31%
+        <div class="metric-card">
+            <div class="metric-value">90.31%</div>
+            <div class="metric-label">Pneumonia F1-Score</div>
         </div>
-
-        <div class="metric-label">
-        Pneumonia F1
-        </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
@@ -845,15 +883,16 @@ with m4:
 # HOW IT WORKS
 # ============================================================
 
-st.markdown("")
-st.markdown("")
+st.html(
+    """
+    <div class="section-title">
+        How PneumoVision Works
+    </div>
 
-st.markdown(
-    "## How PneumoVision Works"
-)
-
-st.caption(
-    "From an uploaded X-ray to an explainable prediction."
+    <div class="section-subtitle">
+        From an uploaded X-ray to an explainable prediction.
+    </div>
+    """
 )
 
 
@@ -862,48 +901,111 @@ s1, s2, s3, s4 = st.columns(4)
 
 with s1:
 
-    st.info(
-        "**01 — Upload**\n\n"
-        "Upload a chest X-ray image."
+    st.html(
+        """
+        <div class="workflow-card">
+
+            <div class="workflow-number">01</div>
+
+            <div class="workflow-title">
+                Upload
+            </div>
+
+            <div class="workflow-text">
+                Upload a chest X-ray image in JPG,
+                JPEG or PNG format.
+            </div>
+
+        </div>
+        """
     )
 
 
 with s2:
 
-    st.info(
-        "**02 — Analyze**\n\n"
-        "EfficientNetB0 processes the image."
+    st.html(
+        """
+        <div class="workflow-card">
+
+            <div class="workflow-number">02</div>
+
+            <div class="workflow-title">
+                Analyze
+            </div>
+
+            <div class="workflow-text">
+                EfficientNetB0 processes the image
+                using the trained feature extractor.
+            </div>
+
+        </div>
+        """
     )
 
 
 with s3:
 
-    st.info(
-        "**03 — Predict**\n\n"
-        "The model estimates pneumonia probability."
+    st.html(
+        """
+        <div class="workflow-card">
+
+            <div class="workflow-number">03</div>
+
+            <div class="workflow-title">
+                Predict
+            </div>
+
+            <div class="workflow-text">
+                The model estimates the probability
+                of pneumonia from the X-ray.
+            </div>
+
+        </div>
+        """
     )
 
 
 with s4:
 
-    st.info(
-        "**04 — Explain**\n\n"
-        "Grad-CAM highlights influential regions."
+    st.html(
+        """
+        <div class="workflow-card">
+
+            <div class="workflow-number">04</div>
+
+            <div class="workflow-title">
+                Explain
+            </div>
+
+            <div class="workflow-text">
+                Grad-CAM highlights influential
+                regions used by the model.
+            </div>
+
+        </div>
+        """
     )
 
 
 # ============================================================
-# ANALYSIS
+# ANALYSIS SECTION
 # ============================================================
 
-st.markdown("---")
-
-st.header(
-    "Analyze Your X-Ray"
+st.markdown(
+    '<div id="analysis"></div>',
+    unsafe_allow_html=True
 )
 
-st.write(
-    "Upload a chest X-ray image to get an AI-powered prediction."
+st.html(
+    """
+    <div class="section-title">
+        Analyze Your X-Ray
+    </div>
+
+    <div class="section-subtitle">
+        Upload a chest X-ray to receive an AI-powered prediction.
+    </div>
+    """
 )
 
 
@@ -914,11 +1016,11 @@ uploaded_file = st.file_uploader(
 )
 
 
-if uploaded_file is not None:
+# ============================================================
+# PREDICTION
+# ============================================================
 
-    # ========================================================
-    # LOAD IMAGE
-    # ========================================================
+if uploaded_file is not None:
 
     original_image = tf.keras.utils.load_img(
         uploaded_file,
@@ -941,13 +1043,7 @@ if uploaded_file is not None:
     )
 
 
-    # ========================================================
-    # PREDICTION
-    # ========================================================
-
-    with st.spinner(
-        "Analyzing X-ray..."
-    ):
+    with st.spinner("Analyzing X-ray..."):
 
         prediction = model.predict(
             input_image,
@@ -955,9 +1051,7 @@ if uploaded_file is not None:
         )[0][0]
 
 
-    pneumonia_probability = (
-        float(prediction) * 100
-    )
+    pneumonia_probability = float(prediction) * 100
 
     normal_probability = (
         1 - float(prediction)
@@ -971,18 +1065,16 @@ if uploaded_file is not None:
     if prediction >= 0.5:
 
         result = "PNEUMONIA"
-
         confidence = pneumonia_probability
 
     else:
 
         result = "NORMAL"
-
         confidence = normal_probability
 
 
     # ========================================================
-    # DISPLAY IMAGE AND RESULT
+    # RESULT
     # ========================================================
 
     image_col, result_col = st.columns(
@@ -992,9 +1084,7 @@ if uploaded_file is not None:
 
     with image_col:
 
-        st.subheader(
-            "Uploaded X-Ray"
-        )
+        st.subheader("Uploaded X-Ray")
 
         st.image(
             original_image,
@@ -1004,21 +1094,42 @@ if uploaded_file is not None:
 
     with result_col:
 
-        st.subheader(
-            "AI Prediction"
-        )
-
+        st.subheader("AI Prediction")
 
         if result == "PNEUMONIA":
 
-            st.error(
-                f"Prediction: {result}"
+            st.html(
+                f"""
+                <div class="result-box result-positive">
+
+                    <div class="result-title">
+                        Prediction
+                    </div>
+
+                    <div class="result-value">
+                        {result}
+                    </div>
+
+                </div>
+                """
             )
 
         else:
 
-            st.success(
-                f"Prediction: {result}"
+            st.html(
+                f"""
+                <div class="result-box result-negative">
+
+                    <div class="result-title">
+                        Prediction
+                    </div>
+
+                    <div class="result-value">
+                        {result}
+                    </div>
+
+                </div>
+                """
             )
 
 
@@ -1027,12 +1138,10 @@ if uploaded_file is not None:
             f"{confidence:.2f}%"
         )
 
-
         st.metric(
             "Pneumonia Probability",
             f"{pneumonia_probability:.2f}%"
         )
-
 
         st.metric(
             "Normal Probability",
@@ -1041,19 +1150,18 @@ if uploaded_file is not None:
 
 
     # ========================================================
-    # PROBABILITY BAR
+    # PROBABILITY
     # ========================================================
 
-    st.subheader(
-        "Prediction Probabilities"
-    )
+    st.subheader("Prediction Probabilities")
 
     st.progress(
         int(pneumonia_probability)
     )
 
     st.caption(
-        f"Pneumonia: {pneumonia_probability:.2f}%"
+        f"Pneumonia probability: "
+        f"{pneumonia_probability:.2f}%"
     )
 
 
@@ -1142,26 +1250,21 @@ if uploaded_file is not None:
                 axis=(0, 1, 2)
             )
 
-
             conv_outputs = conv_outputs[0]
-
 
             heatmap = tf.reduce_sum(
                 conv_outputs * pooled_grads,
                 axis=-1
             )
 
-
             heatmap = tf.maximum(
                 heatmap,
                 0
             )
 
-
             max_value = tf.reduce_max(
                 heatmap
             )
-
 
             if float(max_value) > 0:
 
@@ -1169,23 +1272,20 @@ if uploaded_file is not None:
                     heatmap / max_value
                 )
 
-
             heatmap = heatmap.numpy()
 
 
             # ------------------------------------------------
-            # DISPLAY GRAD-CAM
+            # DISPLAY
             # ------------------------------------------------
 
             fig, ax = plt.subplots(
                 figsize=(8, 8)
             )
 
-
             ax.imshow(
                 original_image
             )
-
 
             ax.imshow(
                 heatmap,
@@ -1199,24 +1299,19 @@ if uploaded_file is not None:
                 )
             )
 
-
             ax.set_title(
                 f"PneumoVision: {result}"
             )
-
 
             ax.axis("off")
 
             plt.tight_layout()
 
-
             st.pyplot(
                 fig
             )
 
-
             plt.close(fig)
-
 
         else:
 
@@ -1238,37 +1333,32 @@ if uploaded_file is not None:
 
 
 # ============================================================
-# DISCLAIMER
-# ============================================================
-
-st.markdown(
-    """
-    <div class="disclaimer">
-
-    <strong>Medical Disclaimer</strong><br><br>
-
-    PneumoVision is an AI-based educational and research
-    demonstration. It is not a medical diagnostic tool and
-    should not be used as a substitute for evaluation by a
-    qualified healthcare professional.
-
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# ============================================================
 # FOOTER
 # ============================================================
 
-st.markdown("---")
-
-st.markdown(
+st.html(
     """
     <div class="footer">
-        PneumoVision · EfficientNetB0 · Transfer Learning · Grad-CAM
+
+        <div class="footer-name">
+            Developed by Sondipta Ray
+        </div>
+
+        <div class="footer-course">
+            B.Tech CSE — Artificial Intelligence & Machine Learning
+        </div>
+
+        <div class="footer-text">
+            Designed, developed and implemented independently,
+            including the machine learning pipeline,
+            model fine-tuning, evaluation, Grad-CAM explainability
+            and Streamlit deployment.
+        </div>
+
+        <div class="footer-text" style="margin-top:12px;">
+            PneumoVision · EfficientNetB0 · Transfer Learning · Grad-CAM
+        </div>
+
     </div>
-    """,
-    unsafe_allow_html=True
+    """
 )
