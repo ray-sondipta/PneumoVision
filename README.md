@@ -12,7 +12,7 @@ The trained model is served through an interactive **Streamlit web application**
 
 ## 🚀 Live Demo
 
-> **Live Demo:** Coming soon
+> **Live Demo:** https://pneumovision-xray.streamlit.app/
 
 The application will be deployed as a publicly accessible Streamlit web application.
 
